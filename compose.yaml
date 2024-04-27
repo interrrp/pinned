@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    environment:
+      - ADDR=:80
+      - REDIS_URL=db:6379
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+  
+  db:
+    image: redis:7-alpine
