@@ -12,8 +12,20 @@ func (s *Server) handleGuess(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if s.pinSvc.IsCorrect(guess) {
-		newPin := s.pinSvc.Generate()
+	correct, err := s.pinSvc.IsCorrect(guess)
+	if err != nil {
+		slog.Error("Failed to judge guess", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if correct {
+		newPin, err := s.pinSvc.Generate()
+		if err != nil {
+			slog.Error("Failed to regenerate new PIN", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 		slog.Info("Regenerated PIN", "newPin", newPin)
 		w.WriteHeader(http.StatusOK)
 	} else {

@@ -14,7 +14,10 @@ func TestValidGuess(t *testing.T) {
 	pinSvc := pin.NewInMemoryPINService()
 	s := NewServer(pinSvc)
 
-	req := newGuessRequest(pinSvc.CurrentPIN())
+	correctPIN, err := pinSvc.CurrentPIN()
+	assert.NoError(t, err)
+
+	req := newGuessRequest(correctPIN)
 	res := httptest.NewRecorder()
 	s.ServeHTTP(res, req)
 

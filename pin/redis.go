@@ -11,7 +11,7 @@ type RedisPINService struct {
 	key string
 }
 
-func NewRedisPINService(addr string, key string) PINService {
+func NewRedisPINService(addr string, key string) (PINService, error) {
 	s := &RedisPINService{
 		db: redis.NewClient(&redis.Options{
 			Addr: addr,
@@ -20,22 +20,31 @@ func NewRedisPINService(addr string, key string) PINService {
 	}
 
 	if s.db.Exists(context.TODO(), key).Val() == 0 {
-		s.Generate()
+		if _, err := s.Generate(); err != nil {
+			return nil, err
+		}
 	}
 
-	return s
+	return s, nil
 }
 
-func (s *RedisPINService) CurrentPIN() string {
-	return s.db.Get(context.TODO(), s.key).Val()
+func (s *RedisPINService) CurrentPIN() (string, error) {
+	return s.db.Get(context.TODO(), s.key).Result()
 }
 
-func (s *RedisPINService) IsCorrect(pin string) bool {
-	return pin == s.CurrentPIN()
+func (s *RedisPINService) IsCorrect(pin string) (bool, error) {
+	currentPIN, err := s.CurrentPIN()
+	if err != nil {
+		return false, err
+	}
+	return pin == currentPIN, nil
 }
 
-func (s *RedisPINService) Generate() string {
+func (s *RedisPINService) Generate() (string, error) {
 	p := generateRandomPIN()
-	s.db.Set(context.TODO(), s.key, p, 0)
-	return p
+	err := s.db.Set(context.TODO(), s.key, p, 0).Err()
+	if err != nil {
+		return "", err
+	}
+	return p, err
 }

@@ -1,7 +1,7 @@
 package pin
 
 type PINService interface {
-	CurrentPIN() string
-	IsCorrect(pin string) bool
-	Generate() string
+	CurrentPIN() (string, error)
+	IsCorrect(pin string) (bool, error)
+	Generate() (string, error)
 }

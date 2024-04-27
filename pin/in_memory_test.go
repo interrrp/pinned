@@ -8,12 +8,24 @@ import (
 
 func TestNew(t *testing.T) {
 	s := NewInMemoryPINService()
-	assert.NotEmpty(t, s.CurrentPIN())
+
+	pin, err := s.CurrentPIN()
+	assert.NoError(t, err)
+
+	assert.NotEmpty(t, pin)
 }
 
 func TestIsCorrect(t *testing.T) {
 	s := NewInMemoryPINService()
 
-	assert.True(t, s.IsCorrect(s.CurrentPIN()))
-	assert.False(t, s.IsCorrect("12345"))
+	pin, err := s.CurrentPIN()
+	assert.NoError(t, err)
+
+	correct, err := s.IsCorrect(pin)
+	assert.NoError(t, err)
+	assert.True(t, correct)
+
+	correct, err = s.IsCorrect("12345")
+	assert.NoError(t, err)
+	assert.False(t, correct)
 }

@@ -10,15 +10,15 @@ func NewInMemoryPINService() PINService {
 	return s
 }
 
-func (s *InMemoryPINService) CurrentPIN() string {
-	return s.pin
+func (s *InMemoryPINService) CurrentPIN() (string, error) {
+	return s.pin, nil
 }
 
-func (s *InMemoryPINService) IsCorrect(pin string) bool {
-	return pin == s.pin
+func (s *InMemoryPINService) IsCorrect(pin string) (bool, error) {
+	return pin == s.pin, nil
 }
 
-func (s *InMemoryPINService) Generate() string {
+func (s *InMemoryPINService) Generate() (string, error) {
 	s.pin = generateRandomPIN()
-	return s.pin
+	return s.pin, nil
 }
