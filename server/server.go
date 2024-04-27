@@ -17,6 +17,7 @@ func NewServer(pinSvc pin.PINService) *Server {
 		mux:    http.NewServeMux(),
 	}
 
+	s.mux.Handle("/", http.FileServer(http.Dir("./static")))
 	s.mux.HandleFunc("POST /", s.handleGuess)
 
 	return s
