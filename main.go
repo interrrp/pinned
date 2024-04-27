@@ -15,7 +15,7 @@ const Addr = ":8080"
 func main() {
 	slog.SetDefault(slog.New(tint.NewHandler(os.Stderr, nil)))
 
-	pinSvc := pin.NewInMemoryPINService()
+	pinSvc := pin.NewRedisPINService(":6379", "pin")
 	s := server.NewServer(pinSvc)
 
 	slog.Info("Starting", "addr", Addr, "pin", pinSvc.CurrentPIN())
