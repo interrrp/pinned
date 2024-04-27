@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"net/http"
 
 	"github.com/interrrp/pinned/pin"
@@ -14,8 +14,7 @@ func main() {
 	pinSvc := pin.NewInMemoryPINService()
 	s := server.NewServer(pinSvc)
 
-	log.Printf("Starting with initial PIN %s", pinSvc.CurrentPIN())
-	log.Printf("Listening on %s\n", Addr)
+	slog.Info("Starting", "addr", Addr, "pin", pinSvc.CurrentPIN())
 
 	http.ListenAndServe(Addr, s)
 }
