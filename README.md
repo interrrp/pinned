@@ -38,3 +38,7 @@ Configuration is done through environment variables.
 | ----------- | ------------------------------ | ------- |
 | `ADDR`      | The address to listen on.      | `:8080` |
 | `REDIS_URL` | The URL of the Redis instance. | `:6379` |
+
+## 🔑 License
+
+Pinned is licensed under [GPLv3](./LICENSE).
