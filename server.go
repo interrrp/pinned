@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/interrrp/pinned/pin"
@@ -31,8 +32,9 @@ func (s *Server) handleGuess(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if s.pinSvc.IsCorrect(guess) {
+		newPin := s.pinSvc.Generate()
+		log.Printf("PIN has been guessed correctly! New PIN is %s", newPin)
 		w.WriteHeader(http.StatusOK)
-		s.pinSvc.Generate()
 	} else {
 		w.WriteHeader(http.StatusForbidden)
 	}

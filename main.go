@@ -10,7 +10,11 @@ import (
 const Addr = ":8080"
 
 func main() {
-	s := NewServer(pin.NewInMemoryPINService())
+	pinSvc := pin.NewInMemoryPINService()
+	s := NewServer(pinSvc)
+
+	log.Printf("Starting with initial PIN %s", pinSvc.CurrentPIN())
 	log.Printf("Listening on %s\n", Addr)
+
 	http.ListenAndServe(Addr, s)
 }
