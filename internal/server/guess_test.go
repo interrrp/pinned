@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/interrrp/pinned/pin"
+	"github.com/interrrp/pinned/internal/pin"
 	"github.com/stretchr/testify/assert"
 )
 

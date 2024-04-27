@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -ldflags="-s -w" -o pinned .
+RUN go build -ldflags="-s -w" -o pinned ./cmd
 
 CMD [ "./pinned" ]

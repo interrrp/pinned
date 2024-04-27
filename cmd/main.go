@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/interrrp/pinned/pin"
-	"github.com/interrrp/pinned/server"
+	"github.com/interrrp/pinned/internal/pin"
+	"github.com/interrrp/pinned/internal/server"
 	"github.com/lmittmann/tint"
 )
 

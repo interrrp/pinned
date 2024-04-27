@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	"github.com/interrrp/pinned/pin"
+	"github.com/interrrp/pinned/internal/pin"
 )
 
 type Server struct {
